@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  vrmanaged:
+    # container_name: vrmanaged #if you plan to keep whole your project in /vrmanaged
+    build: .      #./vrmanaged
+    volumes:
+      - .:/var/www/html  #./vrmanaged:/var/www/html
+    ports:
+      - 3000:80
+
+  mysql_db:  #use it as a host in your datasource
+    image: mysql:latest  #make it version specific
+    environment:
+      # MYSQL_USERNAME=root
+      # MYSQL_PASSWORD=root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cms4
+    ports:
+      - 3301:3306  #3306:3306 gives you error because there already you are using mysql in your linux
+    volumes:
+      - cms4_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    restart: always
+    ports:
+      - 3002:80
+    environment:
+      PMA_ARBITRARY: 1
+
+  volumes:
+    cms4_data:
