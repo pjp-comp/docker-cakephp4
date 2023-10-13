@@ -1,6 +1,6 @@
 # Containerised CakePHP4 / PHP project
 
-Check ./Dockerfile and ./compose.yaml files.
+Check ./Dockerfile and ./compose.yaml files and update based on your requirement.
 ------------------------------------------
 1. docker compose build --no-cache --force-rm
 2. docker compose up -d
