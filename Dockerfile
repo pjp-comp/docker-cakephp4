@@ -1,4 +1,5 @@
-FROM php:8.2.0-apache #change your version as per your usage, check dockerhub php image
+#change your version as per your usage, check dockerhub php image
+FROM php:8.2.0-apache 
 
 WORKDIR /var/www/html
 
