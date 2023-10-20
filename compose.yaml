@@ -1,18 +1,10 @@
 version: '3'
 
 services:
-  vrmanaged:
-    # container_name: vrmanaged #if you plan to keep whole your project in /vrmanaged
-    #./vrmanaged
-    build: .      
-    volumes:
-      #./vrmanaged:/var/www/html
-      - .:/var/www/html  
-    ports:
-      - 3000:80
 
-  mysql_db:  #use it as a host in your datasource
+  mysql:  #use it as a host in your datasource
     image: mysql:latest  #make it version specific
+    container_name: mysql
     environment:
       # MYSQL_USERNAME=root
       # MYSQL_PASSWORD=root
@@ -20,17 +12,34 @@ services:
       MYSQL_DATABASE: cms4
     ports:
       #3306:3306 gives you error because there already you are using mysql in your linux
-      - 3301:3306  
+      - 3001:3306
+    volumes:
+      #dump data from local to image:  mysqldump -u root -p cms4 > cms4.sql
+      - ./cms4.sql:/docker-entrypoint-initdb.d/cms4.sql  
     # volumes:
       # - cms4_data:/var/lib/mysql
+  #   volumes:
+  #     - mysql_data:/var/lib/mysql
+  # volumes:
+  #   mysql_data:
+
+      
+  vrmanaged:
+    # container_name: vrmanaged #if you plan to keep whole your project in /vrmanaged
+    #./vrmanaged
+    container_name: vrmanaged
+    build: .      
+    volumes:
+      #./vrmanaged:/var/www/html
+      - .:/var/www/html  
+    ports:
+      - 3000:80
 
   phpmyadmin:
     image: phpmyadmin:latest
+    container_name: phpmyadmin
     restart: always
     ports:
       - 3002:80
     environment:
       PMA_ARBITRARY: 1
-
-  # volumes:
-    # cms4_data:
