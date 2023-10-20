@@ -19,4 +19,4 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 RUN docker-php-ext-install intl pdo_mysql pdo_sqlite
 
-RUN mysqldump -u root -p cms4 > cms4.sql
+# RUN mysqldump -u root -p cms4 > cms4.sql
